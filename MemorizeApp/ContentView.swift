@@ -8,14 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var randomCardsNumber: Int = 0
     @State var currentEmojis: [String] = []
     let flagEmojis = ["🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "🇩🇰", "🇺🇸", "🇨🇮", "🇨🇳", "🇳🇬", "🇫🇷", "🇸🇪"]
     let animalEmojis = ["🐢", "🐰", "🐶", "🐸", "🐈", "🐷", "🐼", "🦔", "🐄", "🐀"]
     let gestureEmojis = ["🤲", "👐", "🙌", "👏", "🤝", "👍", "👎", "✊", "✌️", "🤟"]
-    
-    
-    
-    @State var cardCount = 4
     
     var body: some View {
         VStack {
@@ -34,7 +32,8 @@ struct ContentView: View {
     
     var cards: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum:75))]) {
-            ForEach(0..<currentEmojis.count, id: \.self) { index in
+
+            ForEach(0..<randomCardsNumber, id: \.self) { index in
                 CardView(content: currentEmojis[index])
                     .aspectRatio(2/3, contentMode: .fit)
             }
@@ -50,14 +49,15 @@ struct ContentView: View {
             Spacer()
             cardThemeChanger(themeName: "Gestures", imageName: "hand.raised.fill", selectedEmojis: gestureEmojis)
         }
-        .padding(.horizontal)
+        .padding()
     }
     
     func cardThemeChanger(themeName: String, imageName: String, selectedEmojis: [String])  -> some View {
         Button {
             
             currentEmojis = (selectedEmojis + selectedEmojis).shuffled()
-        } label: {
+            randomCardsNumber = getRandomEvenCount(of: currentEmojis)
+            } label: {
             VStack {
                 Image(systemName: imageName)
                     .font(.title)
@@ -66,33 +66,20 @@ struct ContentView: View {
             }
         }
     }
-    
-    
-    
-    /*
-    func cardCountAdjuster(by offset: Int, symbol: String) -> some View {
-        Button(action: {
-            cardCount += offset
-        }, label: {
-            Image(systemName: symbol)
-        })
-        .disabled(cardCount + offset < 1 || cardCount + offset > emojis.count)
+   
+    func getRandomEvenCount(of cardsArray: [String]) -> Int {
+        let evenCounts = (4...cardsArray.count).filter { $0 % 2 == 0 }
+        guard let randomEvenCount = evenCounts.randomElement() else { return 4 }
+        return randomEvenCount
     }
     
-    
-    var cardRevomer: some View {
-        cardCountAdjuster(by: -1, symbol: "rectangle.stack.badge.minus.fill")
-    }
-    
-    var cardAdder: some View {
-        cardCountAdjuster(by: +1, symbol: "rectangle.stack.badge.plus.fill")
-    }
-     */
+
 }
 
 struct CardView: View {
     let content: String
-    @State var isFaceUp = true
+    @State var isFaceUp = false
+    
     
     var body: some View {
         ZStack {
