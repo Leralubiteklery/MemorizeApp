@@ -8,17 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
-    let emojis = ["👻", "😈", "🎃", "🕷️", "💀", "🍭", "🧙", "🙀", "😱", "🕸️", "👹"]
+    @State var currentEmojis: [String] = []
+    let flagEmojis = ["🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "🇩🇰", "🇺🇸", "🇨🇮", "🇨🇳", "🇳🇬", "🇫🇷", "🇸🇪"]
+    let animalEmojis = ["🐢", "🐰", "🐶", "🐸", "🐈", "🐷", "🐼", "🦔", "🐄", "🐀"]
+    let gestureEmojis = ["🤲", "👐", "🙌", "👏", "🤝", "👍", "👎", "✊", "✌️", "🤟"]
+    
+    
     
     @State var cardCount = 4
     
     var body: some View {
         VStack {
+            Text("Memorize!")
+                .font(.largeTitle)
             ScrollView {
                 cards
             }
             Spacer()
-            cardCountAdjusters
+            cardThemeAdjusters
                 .imageScale(.large)
                 .font(.largeTitle)
         }
@@ -26,23 +33,43 @@ struct ContentView: View {
     }
     
     var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum:120))]) {
-            ForEach(0..<cardCount, id: \.self) { index in
-                CardView(content: emojis[index])
+        LazyVGrid(columns: [GridItem(.adaptive(minimum:75))]) {
+            ForEach(0..<currentEmojis.count, id: \.self) { index in
+                CardView(content: currentEmojis[index])
                     .aspectRatio(2/3, contentMode: .fit)
             }
         }
         .foregroundStyle(.orange)
     }
     
-    var cardCountAdjusters: some View {
+    var cardThemeAdjusters: some View {
         HStack {
-            cardRevomer
+            cardThemeChanger(themeName: "Flags", imageName: "globe.europe.africa.fill", selectedEmojis: flagEmojis)
             Spacer()
-            cardAdder
+            cardThemeChanger(themeName: "Animals", imageName: "hare.fill", selectedEmojis: animalEmojis)
+            Spacer()
+            cardThemeChanger(themeName: "Gestures", imageName: "hand.raised.fill", selectedEmojis: gestureEmojis)
+        }
+        .padding(.horizontal)
+    }
+    
+    func cardThemeChanger(themeName: String, imageName: String, selectedEmojis: [String])  -> some View {
+        Button {
+            
+            currentEmojis = (selectedEmojis + selectedEmojis).shuffled()
+        } label: {
+            VStack {
+                Image(systemName: imageName)
+                    .font(.title)
+                Text(themeName)
+                    .font(.body)
+            }
         }
     }
     
+    
+    
+    /*
     func cardCountAdjuster(by offset: Int, symbol: String) -> some View {
         Button(action: {
             cardCount += offset
@@ -52,6 +79,7 @@ struct ContentView: View {
         .disabled(cardCount + offset < 1 || cardCount + offset > emojis.count)
     }
     
+    
     var cardRevomer: some View {
         cardCountAdjuster(by: -1, symbol: "rectangle.stack.badge.minus.fill")
     }
@@ -59,6 +87,7 @@ struct ContentView: View {
     var cardAdder: some View {
         cardCountAdjuster(by: +1, symbol: "rectangle.stack.badge.plus.fill")
     }
+     */
 }
 
 struct CardView: View {
