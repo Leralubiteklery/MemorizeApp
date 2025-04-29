@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  EmojiMemorizeGameView.swift
 //  MemorizeApp
 //
 //  Created by Lera Savchenko on 15.02.25.
@@ -7,13 +7,16 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct EmojiMemorizeGameView: View {
+    
+    var gameViewModel: EmojiMemoryGame = EmojiMemoryGame()
     
     @State var randomCardsNumber: Int = 0
     @State var currentEmojis: [String] = []
-    let flagEmojis = ["🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "🇩🇰", "🇺🇸", "🇨🇮", "🇨🇳", "🇳🇬", "🇫🇷", "🇸🇪"]
-    let animalEmojis = ["🐢", "🐰", "🐶", "🐸", "🐈", "🐷", "🐼", "🦔", "🐄", "🐀"]
-    let gestureEmojis = ["🤲", "👐", "🙌", "👏", "🤝", "👍", "👎", "✊", "✌️", "🤟"]
+    
+
+//    let animalEmojis = ["🐢", "🐰", "🐶", "🐸", "🐈", "🐷", "🐼", "🦔", "🐄", "🐀"]
+//    let gestureEmojis = ["🤲", "👐", "🙌", "👏", "🤝", "👍", "👎", "✊", "✌️", "🤟"]
     
     var body: some View {
         VStack {
@@ -23,7 +26,7 @@ struct ContentView: View {
                 cards
             }
             Spacer()
-            cardThemeAdjusters
+//            cardThemeAdjusters
                 .imageScale(.large)
                 .font(.largeTitle)
         }
@@ -33,24 +36,24 @@ struct ContentView: View {
     var cards: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum:75))]) {
 
-            ForEach(0..<randomCardsNumber, id: \.self) { index in
-                CardView(content: currentEmojis[index])
+            ForEach(gameViewModel.cards.indices, id: \.self) { index in
+                CardView(card: gameViewModel.cards[index])
                     .aspectRatio(2/3, contentMode: .fit)
             }
         }
         .foregroundStyle(.orange)
     }
     
-    var cardThemeAdjusters: some View {
-        HStack {
-            cardThemeChanger(themeName: "Flags", imageName: "globe.europe.africa.fill", selectedEmojis: flagEmojis)
-            Spacer()
-            cardThemeChanger(themeName: "Animals", imageName: "hare.fill", selectedEmojis: animalEmojis)
-            Spacer()
-            cardThemeChanger(themeName: "Gestures", imageName: "hand.raised.fill", selectedEmojis: gestureEmojis)
-        }
-        .padding()
-    }
+//    var cardThemeAdjusters: some View {
+//        HStack {
+//            cardThemeChanger(themeName: "Flags", imageName: "globe.europe.africa.fill", selectedEmojis: flagEmojis)
+//            Spacer()
+//            cardThemeChanger(themeName: "Animals", imageName: "hare.fill", selectedEmojis: animalEmojis)
+//            Spacer()
+//            cardThemeChanger(themeName: "Gestures", imageName: "hand.raised.fill", selectedEmojis: gestureEmojis)
+//        }
+//        .padding()
+//    }
     
     func cardThemeChanger(themeName: String, imageName: String, selectedEmojis: [String])  -> some View {
         Button {
@@ -77,27 +80,22 @@ struct ContentView: View {
 }
 
 struct CardView: View {
-    let content: String
-    @State var isFaceUp = false
-    
-    
+    let card: MemorizeGame<String>.Card
+
     var body: some View {
         ZStack {
             let base = RoundedRectangle(cornerRadius: 12)
             Group {
                 base.fill(.white)
                 base.strokeBorder(lineWidth: 2)
-                Text(content).font(.largeTitle)
+                Text(card.content).font(.largeTitle)
             }
-            .opacity(isFaceUp ? 1 : 0)
-            base.fill().opacity(isFaceUp ? 0 : 1)
-        }
-        .onTapGesture {
-            isFaceUp.toggle()
+            .opacity(card.isFaceUp ? 1 : 0)
+            base.fill().opacity(card.isFaceUp ? 0 : 1)
         }
     }
 }
 
 #Preview {
-    ContentView()
+    EmojiMemorizeGameView()
 }
