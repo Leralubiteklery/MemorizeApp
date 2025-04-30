@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EmojiMemorizeGameView: View {
     
-    var gameViewModel: EmojiMemoryGame = EmojiMemoryGame()
+    @ObservedObject var gameViewModel: EmojiMemoryGame
     
     @State var randomCardsNumber: Int = 0
     @State var currentEmojis: [String] = []
@@ -25,20 +25,23 @@ struct EmojiMemorizeGameView: View {
             ScrollView {
                 cards
             }
-            Spacer()
+//            Spacer()
 //            cardThemeAdjusters
-                .imageScale(.large)
-                .font(.largeTitle)
+//                .imageScale(.large)
+//                .font(.largeTitle)
+            Button("Shuffle") {
+                gameViewModel.shuffle()
+            }
         }
         .padding()
     }
     
     var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum:75))]) {
-
+        LazyVGrid(columns: [GridItem(.adaptive(minimum:85), spacing: 0)], spacing: 0) {
             ForEach(gameViewModel.cards.indices, id: \.self) { index in
-                CardView(card: gameViewModel.cards[index])
+                CardView(gameViewModel.cards[index])
                     .aspectRatio(2/3, contentMode: .fit)
+                    .padding(4)
             }
         }
         .foregroundStyle(.orange)
@@ -81,6 +84,10 @@ struct EmojiMemorizeGameView: View {
 
 struct CardView: View {
     let card: MemorizeGame<String>.Card
+    
+    init(_ card: MemorizeGame<String>.Card) {
+        self.card = card
+    }
 
     var body: some View {
         ZStack {
@@ -88,7 +95,10 @@ struct CardView: View {
             Group {
                 base.fill(.white)
                 base.strokeBorder(lineWidth: 2)
-                Text(card.content).font(.largeTitle)
+                Text(card.content)
+                    .font(.system(size: 200))
+                    .minimumScaleFactor(0.01)
+                    .aspectRatio(1, contentMode: .fit)
             }
             .opacity(card.isFaceUp ? 1 : 0)
             base.fill().opacity(card.isFaceUp ? 0 : 1)
@@ -97,5 +107,5 @@ struct CardView: View {
 }
 
 #Preview {
-    EmojiMemorizeGameView()
+    EmojiMemorizeGameView(gameViewModel: EmojiMemoryGame())
 }

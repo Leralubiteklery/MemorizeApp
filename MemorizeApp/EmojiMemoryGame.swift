@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-class EmojiMemoryGame {
+class EmojiMemoryGame: ObservableObject {
     
     private static let flagEmojis = ["🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "🇩🇰", "🇺🇸", "🇨🇮", "🇨🇳", "🇳🇬", "🇫🇷", "🇸🇪"]
     
     private static func createMemoryGame() -> MemorizeGame<String> {
-        return MemorizeGame(numberOfPairsOfCards: 4) { pairIndex in
+        return MemorizeGame(numberOfPairsOfCards: 8) { pairIndex in
             if flagEmojis.indices.contains(pairIndex) {
                 return flagEmojis[pairIndex]
             } else {
@@ -20,12 +20,18 @@ class EmojiMemoryGame {
             }
         }
     }
-    
+        
     // model
-    private var game = createMemoryGame()
+    @Published private var game = createMemoryGame()
     
     var cards:Array<MemorizeGame<String>.Card> {
         return game.cards
+    }
+    
+//     MARK: - Intents
+    
+    func shuffle() {
+        game.shuffle()
     }
     
     func choose(_ card: MemorizeGame<String>.Card) {
