@@ -29,7 +29,6 @@ class EmojiMemoryGame: ObservableObject {
     }
     
 //     MARK: - Intents
-    
     func shuffle() {
         game.shuffle()
     }
