@@ -30,6 +30,7 @@ struct MemorizeGame<CardContent> {
     }
     
     struct Card {
+        // change to FALSE
         var isFaceUp = true
         var isMatched = false
         let content: CardContent

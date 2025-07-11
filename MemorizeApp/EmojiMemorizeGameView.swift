@@ -58,26 +58,26 @@ struct EmojiMemorizeGameView: View {
 //        .padding()
 //    }
     
-    func cardThemeChanger(themeName: String, imageName: String, selectedEmojis: [String])  -> some View {
-        Button {
-            
-            currentEmojis = (selectedEmojis + selectedEmojis).shuffled()
-            randomCardsNumber = getRandomEvenCount(of: currentEmojis)
-            } label: {
-            VStack {
-                Image(systemName: imageName)
-                    .font(.title)
-                Text(themeName)
-                    .font(.body)
-            }
-        }
-    }
+//    func cardThemeChanger(themeName: String, imageName: String, selectedEmojis: [String])  -> some View {
+//        Button {
+//            
+//            currentEmojis = (selectedEmojis + selectedEmojis).shuffled()
+//            randomCardsNumber = getRandomEvenCount(of: currentEmojis)
+//            } label: {
+//            VStack {
+//                Image(systemName: imageName)
+//                    .font(.title)
+//                Text(themeName)
+//                    .font(.body)
+//            }
+//        }
+//    }
    
-    func getRandomEvenCount(of cardsArray: [String]) -> Int {
-        let evenCounts = (4...cardsArray.count).filter { $0 % 2 == 0 }
-        guard let randomEvenCount = evenCounts.randomElement() else { return 4 }
-        return randomEvenCount
-    }
+//    func getRandomEvenCount(of cardsArray: [String]) -> Int {
+//        let evenCounts = (4...cardsArray.count).filter { $0 % 2 == 0 }
+//        guard let randomEvenCount = evenCounts.randomElement() else { return 4 }
+//        return randomEvenCount
+//    }
     
 
 }
@@ -101,7 +101,8 @@ struct CardView: View {
                     .aspectRatio(1, contentMode: .fit)
             }
             .opacity(card.isFaceUp ? 1 : 0)
-            base.fill().opacity(card.isFaceUp ? 0 : 1)
+            base.fill()
+            .opacity(card.isFaceUp ? 0 : 1)
         }
     }
 }

@@ -15,8 +15,8 @@ class EmojiMemoryGame: ObservableObject {
         return MemorizeGame(numberOfPairsOfCards: 8) { pairIndex in
             if flagEmojis.indices.contains(pairIndex) {
                 return flagEmojis[pairIndex]
-            } else {
-                return "🤷‍♀️"
+            } else { 
+                return "🌚"
             }
         }
     }
