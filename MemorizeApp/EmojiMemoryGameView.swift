@@ -23,6 +23,7 @@ struct EmojiMemoryGameView: View {
                 .font(.largeTitle)
             ScrollView {
                 cards
+                    .animation(.default, value: gameViewModel.cards)
             }
 //            Spacer()
 //            cardThemeAdjusters
@@ -37,8 +38,8 @@ struct EmojiMemoryGameView: View {
     
     var cards: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum:85), spacing: 0)], spacing: 0) {
-            ForEach(gameViewModel.cards.indices, id: \.self) { index in
-                CardView(gameViewModel.cards[index])
+            ForEach(gameViewModel.cards) { card in
+                CardView(card)
                     .aspectRatio(2/3, contentMode: .fit)
                     .padding(4)
             }
