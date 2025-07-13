@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EmojiMemorizeGameView: View {
+struct EmojiMemoryGameView: View {
     
     @ObservedObject var gameViewModel: EmojiMemoryGame
     
@@ -15,8 +15,7 @@ struct EmojiMemorizeGameView: View {
     @State var currentEmojis: [String] = []
     
 
-//    let animalEmojis = ["🐢", "🐰", "🐶", "🐸", "🐈", "🐷", "🐼", "🦔", "🐄", "🐀"]
-//    let gestureEmojis = ["🤲", "👐", "🙌", "👏", "🤝", "👍", "👎", "✊", "✌️", "🤟"]
+
     
     var body: some View {
         VStack {
@@ -83,9 +82,9 @@ struct EmojiMemorizeGameView: View {
 }
 
 struct CardView: View {
-    let card: MemorizeGame<String>.Card
+    let card: MemoryGame<String>.Card
     
-    init(_ card: MemorizeGame<String>.Card) {
+    init(_ card: MemoryGame<String>.Card) {
         self.card = card
     }
 
@@ -108,5 +107,5 @@ struct CardView: View {
 }
 
 #Preview {
-    EmojiMemorizeGameView(gameViewModel: EmojiMemoryGame())
+    EmojiMemoryGameView(gameViewModel: EmojiMemoryGame())
 }

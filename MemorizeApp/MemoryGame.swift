@@ -1,5 +1,5 @@
 //
-//  MemorizeGame.swift
+//  MemoryGame.swift
 //  MemorizeApp
 //
 //  Created by Lera Savchenko on 25.04.25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MemorizeGame<CardContent> {
+struct MemoryGame<CardContent> {
     
     private(set) var cards: Array<Card>
     
