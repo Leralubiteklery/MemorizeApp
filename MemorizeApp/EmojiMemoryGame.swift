@@ -10,8 +10,6 @@ import SwiftUI
 class EmojiMemoryGame: ObservableObject {
     
     private static let flagEmojis = ["🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "🇩🇰", "🇺🇸", "🇨🇮", "🇨🇳", "🇳🇬", "🇫🇷", "🇸🇪"]
-    //    let animalEmojis = ["🐢", "🐰", "🐶", "🐸", "🐈", "🐷", "🐼", "🦔", "🐄", "🐀"]
-    //    let gestureEmojis = ["🤲", "👐", "🙌", "👏", "🤝", "👍", "👎", "✊", "✌️", "🤟"]
     
     private static func createMemoryGame() -> MemoryGame<String> {
         return MemoryGame(numberOfPairsOfCards: 8) { pairIndex in
