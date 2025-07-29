@@ -7,65 +7,78 @@
 
 import Foundation
 
-struct GameTheme<Content> {
+struct GameTheme {
     
-    private(set) var name: String
-    private(set) var numberOfPairsOfCards: Int
-    private(set) var selectedEmojiSet: Array<String>
-    private(set) var themeColor: String
+    let name: String
+    let numberOfPairsOfCards: Int
+    let selectedEmojiSet: [String]
+    let themeColor: String
     
-    init(name: String, selectedEmojiSet: Array<String>, themeColor: String) {
+    static let allThemes: [GameTheme] = [
+        GameTheme(
+            name: "Flags",
+            selectedEmojiSet: ["🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "🇩🇰", "🇺🇸", "🇨🇮", "🇨🇳", "🇳🇬", "🇫🇷", "🇸🇪"],
+            themeColor: "blue"
+        ),
+        GameTheme(
+            name: "Animals",
+            selectedEmojiSet: ["🐢", "🐰", "🐶", "🐸", "🐈", "🐷", "🐼", "🦔", "🐄", "🐀"],
+            themeColor: "orange"
+        ),
+        GameTheme(
+            name: "Flags",
+            selectedEmojiSet: ["🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "🇩🇰", "🇺🇸", "🇨🇮", "🇨🇳", "🇳🇬", "🇫🇷", "🇸🇪"],
+            themeColor: "blue"
+        ),
+        GameTheme(
+            name: "Gestures",
+            selectedEmojiSet: ["🤲", "👐", "🙌", "👏", "🤝", "👍", "👎", "✊", "✌️", "🤟"],
+            themeColor: "yellow"
+        ),
+        GameTheme(
+            name: "Plants",
+            selectedEmojiSet: ["☘️", "🌵", "🌴", "🌼", "🌺", "🪴", "💐", "🌾", "🌹", "🍁", "🍄", "🍄‍🟫", "🎋"],
+            themeColor: "green"
+        ),
+        GameTheme(
+            name: "Food",
+            selectedEmojiSet: ["🥪", "🥓", "🌮", "🍣", "🍩", "🍿", "🍗", "🍕", "🍔", "🥙", "🍟", "🍮", "🍰", "🍦"],
+            themeColor: "pink"
+        ),
+        GameTheme(
+            name: "Emojis",
+            selectedEmojiSet: ["😀", "😎", "😭", "😂", "😍", "😡", "🥶", "😶‍🌫️", "😱", "😬"],
+            themeColor: "purple"
+        )
+        
+    ]
+    
+    static func randdomTheme() -> GameTheme {
+        let theme = allThemes.randomElement() ?? GameTheme(name: "Flags", selectedEmojiSet: ["🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "🇩🇰", "🇺🇸", "🇨🇮", "🇨🇳", "🇳🇬", "🇫🇷", "🇸🇪"], themeColor: "blue")
+        let numberOfPairs = Int.random(in: 2...theme.selectedEmojiSet.count)
+        let emojis = theme.selectedEmojiSet.shuffled().prefix(numberOfPairs)
+        return GameTheme(
+            name: theme.name,
+            selectedEmojiSet: Array(emojis),
+            themeColor: theme.themeColor,
+            numberOfPairsOfCards: numberOfPairs
+            )
+    }
+    
+    private init(name: String, selectedEmojiSet: [String], themeColor: String, numberOfPairsOfCards: Int) {
         self.name = name
+        self.selectedEmojiSet = selectedEmojiSet
         self.themeColor = themeColor
-        
-        let maximumPairs = selectedEmojiSet.count
-        self.numberOfPairsOfCards = Int.random(in: 2...maximumPairs)
-        
-        self.selectedEmojiSet = selectedEmojiSet.shuffled().prefix(numberOfPairsOfCards).map { $0 }
-    }
+        self.numberOfPairsOfCards = numberOfPairsOfCards
+       }
     
-    static func set() -> GameTheme {
-        let theme = Theme.allCases.randomElement() ?? .animals
-        
-        switch theme {
-        case .flags:
-            return GameTheme(
-                name: "Flags",
-                selectedEmojiSet: ["🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "🇩🇰", "🇺🇸", "🇨🇮", "🇨🇳", "🇳🇬", "🇫🇷", "🇸🇪"],
-                themeColor: "blue"
-            )
-        case .animals:
-            return GameTheme(
-                name: "Animals",
-                selectedEmojiSet: ["🐢", "🐰", "🐶", "🐸", "🐈", "🐷", "🐼", "🦔", "🐄", "🐀"],
-                themeColor: "orange"
-            )
-        case .gestures:
-            return GameTheme(
-                name: "Gestures",
-                selectedEmojiSet: ["🤲", "👐", "🙌", "👏", "🤝", "👍", "👎", "✊", "✌️", "🤟"],
-                themeColor: "yellow"
-            )
-        case .plants:
-            return GameTheme(
-                name: "Plants",
-                selectedEmojiSet: ["☘️", "🌵", "🌴", "🌼", "🌺", "🪴", "💐", "🌾", "🌹", "🍁", "🍄", "🍄‍🟫", "🎋"],
-                themeColor: "green"
-            )
-        case .food:
-            return GameTheme(
-                name: "Food",
-                selectedEmojiSet: ["🥪", "🥓", "🌮", "🍣", "🍩", "🍿", "🍗", "🍕", "🍔", "🥙", "🍟", "🍮", "🍰", "🍦"],
-                themeColor: "pink"
-            )
-        case .emojis:
-            return GameTheme(
-                name: "Emojis",
-                selectedEmojiSet: ["😀", "😎", "😭", "😂", "😍", "😡", "🥶", "😶‍🌫️", "😱", "😬"],
-                themeColor: "purple"
-            )
-        }
+    init(name: String, selectedEmojiSet: [String], themeColor: String) {
+        self.name = name
+        self.selectedEmojiSet = selectedEmojiSet
+        self.themeColor = themeColor
+        self.numberOfPairsOfCards = selectedEmojiSet.count
     }
+
 }
 
 enum Theme: CaseIterable {
