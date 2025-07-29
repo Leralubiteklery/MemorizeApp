@@ -11,22 +11,22 @@ struct EmojiMemoryGameView: View {
     
     @ObservedObject var gameViewModel: EmojiMemoryGame
     
-    @State var randomCardsNumber: Int = 0
-    @State var currentEmojis: [String] = []
-    
-
-
-    
     var body: some View {
         VStack {
-            Text("Memorize!")
+            Text("\(gameViewModel.theme.name)")
                 .font(.largeTitle)
             ScrollView {
                 cards
                     .animation(.default, value: gameViewModel.cards)
             }
-            Button("Shuffle") {
-                gameViewModel.shuffle()
+            HStack {
+                Button("New Game") {
+                    
+                }
+                Spacer()
+                Button("Shuffle") {
+                    gameViewModel.shuffle()
+                }
             }
         }
         .padding()

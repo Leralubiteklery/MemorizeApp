@@ -23,6 +23,12 @@ class EmojiMemoryGame: ObservableObject {
         
     // model
     @Published private var game = createMemoryGame()
+    private(set) var theme: GameTheme<String>
+    
+    init() {
+        self.theme = GameTheme.set()
+        
+    }
     
 
     

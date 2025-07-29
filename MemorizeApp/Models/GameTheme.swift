@@ -19,12 +19,12 @@ struct GameTheme<Content> {
         self.themeColor = themeColor
         
         let maximumPairs = selectedEmojiSet.count
-        self.numberOfPairsOfCards = Int.random(in: 4...maximumPairs)
+        self.numberOfPairsOfCards = Int.random(in: 2...maximumPairs)
         
         self.selectedEmojiSet = selectedEmojiSet.shuffled().prefix(numberOfPairsOfCards).map { $0 }
     }
     
-    func set() -> GameTheme {
+    static func set() -> GameTheme {
         let theme = Theme.allCases.randomElement() ?? .animals
         
         switch theme {
