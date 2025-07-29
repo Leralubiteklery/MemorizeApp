@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct GameTheme {
+struct GameTheme<Content> {
     
-    var name: String
-    var numberOfPairsOfCards: Int
-    var selectedEmojiSet: Array<String>
-    var themeColor: String
+    private(set) var name: String
+    private(set) var numberOfPairsOfCards: Int
+    private(set) var selectedEmojiSet: Array<String>
+    private(set) var themeColor: String
     
     init(name: String, selectedEmojiSet: Array<String>, themeColor: String) {
         self.name = name
@@ -22,7 +22,6 @@ struct GameTheme {
         self.numberOfPairsOfCards = Int.random(in: 4...maximumPairs)
         
         self.selectedEmojiSet = selectedEmojiSet.shuffled().prefix(numberOfPairsOfCards).map { $0 }
-       
     }
     
     func set() -> GameTheme {
@@ -68,7 +67,6 @@ struct GameTheme {
         }
     }
 }
-
 
 enum Theme: CaseIterable {
     case flags
