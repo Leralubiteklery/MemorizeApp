@@ -20,17 +20,22 @@ struct EmojiMemoryGameView: View {
                     .animation(.default, value: gameViewModel.cards)
             }
             HStack {
-                Button("New Game") {
-                    gameViewModel.startNewGame()
-                }
+                GameButton(
+                    title: "New Game",
+                    action: { gameViewModel.startNewGame() },
+                    backgroundColor: gameViewModel.setThemeColor()
+                )
                 Spacer()
-                Button("Shuffle") {
-                    gameViewModel.shuffle()
-                }
+                GameButton(
+                    title: "Shuffle",
+                    action: { gameViewModel.shuffle() },
+                    backgroundColor: gameViewModel.setThemeColor()
+                )
             }
         }
         .padding()
     }
+        
     
     var cards: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum:85), spacing: 0)], spacing: 0) {
@@ -70,6 +75,22 @@ struct CardView: View {
             .opacity(card.isFaceUp ? 0 : 1)
         }
         .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
+    }
+}
+
+struct GameButton: View {
+    let title: String
+    let action: () -> Void
+    let backgroundColor: Color
+
+    var body: some View {
+        Button(title, action: action)
+            .foregroundStyle(.white)
+            .font(.title2)
+            .fontWeight(.bold)
+            .frame(width: 150, height: 30)
+            .background(backgroundColor)
+            .cornerRadius(20)
     }
 }
 
