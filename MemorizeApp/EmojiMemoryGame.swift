@@ -29,6 +29,8 @@ class EmojiMemoryGame: ObservableObject {
         return game.cards
     }
     
+    
+    
 //     MARK: - Intents
     func shuffle() {
         game.shuffle()
@@ -42,6 +44,27 @@ class EmojiMemoryGame: ObservableObject {
         let newTheme = GameTheme.randomTheme()
         currentTheme = newTheme
         game = EmojiMemoryGame.createMemoryGame(with: newTheme)
+    }
+    
+    func setThemeColor() -> SwiftUI.Color {
+        let themeColor = currentTheme.themeColor
+        
+        switch themeColor {
+        case "orange":
+            return .orange
+        case "yellow":
+            return .yellow
+        case "blue":
+            return .blue
+        case "purple":
+            return .purple
+        case "green":
+            return .green
+        case "pink":
+            return .pink
+        default:
+            return .red
+        }
     }
     
 }

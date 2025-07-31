@@ -16,11 +16,6 @@ struct GameTheme {
     
     static let allThemes: [GameTheme] = [
         GameTheme(
-            name: "Flags",
-            selectedEmojiSet: ["🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "🇩🇰", "🇺🇸", "🇨🇮", "🇨🇳", "🇳🇬", "🇫🇷", "🇸🇪"],
-            themeColor: "blue"
-        ),
-        GameTheme(
             name: "Animals",
             selectedEmojiSet: ["🐢", "🐰", "🐶", "🐸", "🐈", "🐷", "🐼", "🦔", "🐄", "🐀"],
             themeColor: "orange"
