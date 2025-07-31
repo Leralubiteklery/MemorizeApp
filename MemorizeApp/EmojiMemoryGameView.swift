@@ -21,7 +21,7 @@ struct EmojiMemoryGameView: View {
             }
             HStack {
                 Button("New Game") {
-                    
+                    gameViewModel.startNewGame()
                 }
                 Spacer()
                 Button("Shuffle") {
