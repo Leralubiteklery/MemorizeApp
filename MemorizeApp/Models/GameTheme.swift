@@ -53,7 +53,7 @@ struct GameTheme {
         
     ]
     
-    static func randdomTheme() -> GameTheme {
+    static func randomTheme() -> GameTheme {
         let theme = allThemes.randomElement() ?? GameTheme(name: "Flags", selectedEmojiSet: ["🇬🇧", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "🇩🇰", "🇺🇸", "🇨🇮", "🇨🇳", "🇳🇬", "🇫🇷", "🇸🇪"], themeColor: "blue")
         let numberOfPairs = Int.random(in: 2...theme.selectedEmojiSet.count)
         let emojis = theme.selectedEmojiSet.shuffled().prefix(numberOfPairs)
@@ -79,13 +79,4 @@ struct GameTheme {
         self.numberOfPairsOfCards = selectedEmojiSet.count
     }
 
-}
-
-enum Theme: CaseIterable {
-    case flags
-    case animals
-    case gestures
-    case plants
-    case emojis
-    case food
 }
