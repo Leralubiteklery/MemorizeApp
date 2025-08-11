@@ -19,6 +19,10 @@ class EmojiMemoryGame: ObservableObject {
     @Published private var game: MemoryGame<String>
     @Published private(set) var currentTheme: GameTheme
     
+    var score: Int {
+        game.score
+    }
+    
     init(currentTheme: GameTheme) {
         let theme = GameTheme.randomTheme()
         self.currentTheme = theme
