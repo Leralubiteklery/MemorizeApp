@@ -12,7 +12,7 @@ struct EmojiMemoryGameView: View {
     @ObservedObject var gameViewModel: EmojiMemoryGame
     
     private let aspectRatio: CGFloat = 2/3
-
+    
     
     var body: some View {
         VStack {
@@ -20,63 +20,33 @@ struct EmojiMemoryGameView: View {
                 .font(.largeTitle)
             Text("Score: \(gameViewModel.score)")
             cards
-                    .animation(.default, value: gameViewModel.cards)
-            }
-            HStack {
-                GameButton(
-                    title: "New Game",
-                    action: { gameViewModel.startNewGame() },
-                    backgroundColor: gameViewModel.setThemeColor()
-                )
-                Spacer()
-                GameButton(
-                    title: "Shuffle",
-                    action: { gameViewModel.shuffle() },
-                    backgroundColor: gameViewModel.setThemeColor()
-                )
-            }
+                .animation(.default, value: gameViewModel.cards)
+        }
+        HStack {
+            GameButton(
+                title: "New Game",
+                action: { gameViewModel.startNewGame() },
+                backgroundColor: gameViewModel.setThemeColor()
+            )
+            Spacer()
+            GameButton(
+                title: "Shuffle",
+                action: { gameViewModel.shuffle() },
+                backgroundColor: gameViewModel.setThemeColor()
+            )
+        }
         .padding()
     }
-        
+    
     private var cards: some View {
-        GeometryReader { geomtry in
-            let gridItemSize = gridItemWidthThatFits(
-                count: gameViewModel.cards.count,
-                size: geomtry.size,
-                atAspectRatio: aspectRatio
-            )
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: gridItemSize), spacing: 0)], spacing: 0) {
-                ForEach(gameViewModel.cards) { card in
-                    CardView(card)
-                        .aspectRatio(aspectRatio, contentMode: .fit)
-                        .padding(4)
-                        .onTapGesture {
-                            gameViewModel.choose(card)
-                        }
+        AspectVGrid(items: gameViewModel.cards, aspectRatio: aspectRatio) { card in
+            CardView(card)
+                .padding(4)
+                .onTapGesture {
+                    gameViewModel.choose(card)
                 }
-            }
         }
         .foregroundStyle(gameViewModel.setThemeColor())
-    }
-    
-    func gridItemWidthThatFits(
-        count: Int,
-        size: CGSize,
-        atAspectRatio aspectRatio: CGFloat
-    ) -> CGFloat {
-        let count = CGFloat(count)
-        var columnCount = 1.0
-        repeat {
-            let width = size.width / columnCount
-            let height = width / aspectRatio
-            
-            let rowCount = (count / columnCount).rounded(.up)
-            if rowCount * height < size.height {
-                return (size.width / columnCount).rounded(.down)
-            }
-            columnCount += 1
-        } while columnCount < count
-        return min(size.width / count, size.height * aspectRatio).rounded(.down)
     }
 }
 
@@ -86,7 +56,7 @@ struct CardView: View {
     init(_ card: MemoryGame<String>.Card) {
         self.card = card
     }
-
+    
     var body: some View {
         ZStack {
             let base = RoundedRectangle(cornerRadius: 12)
@@ -100,7 +70,7 @@ struct CardView: View {
             }
             .opacity(card.isFaceUp ? 1 : 0)
             base.fill()
-            .opacity(card.isFaceUp ? 0 : 1)
+                .opacity(card.isFaceUp ? 0 : 1)
         }
         .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
     }
@@ -110,7 +80,7 @@ struct GameButton: View {
     let title: String
     let action: () -> Void
     let backgroundColor: Color
-
+    
     var body: some View {
         Button(title, action: action)
             .foregroundStyle(.white)
