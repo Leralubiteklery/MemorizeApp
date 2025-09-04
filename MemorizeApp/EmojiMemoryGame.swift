@@ -33,8 +33,6 @@ class EmojiMemoryGame: ObservableObject {
         return game.cards
     }
     
-    
-    
 //     MARK: - Intents
     func shuffle() {
         game.shuffle()
