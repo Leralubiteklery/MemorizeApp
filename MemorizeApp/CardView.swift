@@ -7,10 +7,11 @@
 
 import SwiftUI
 
+typealias Card = MemoryGame<String>.Card
 struct CardView: View {
-    let card: MemoryGame<String>.Card
+    let card: Card
     
-    init(_ card: MemoryGame<String>.Card) {
+    init(_ card: Card) {
         self.card = card
     }
     
@@ -33,9 +34,8 @@ struct CardView: View {
     }
 }
 
-typealias Card = MemoryGame<String>.Card
 #Preview {
-        CardView(MemoryGame<String>.Card(content: "X", id: "test1"))
+        CardView(Card(content: "X", id: "test1"))
         .padding()
         .foregroundStyle(.gray)
 }
