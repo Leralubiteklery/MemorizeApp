@@ -20,6 +20,7 @@ struct MemoryGame<CardContent>  where CardContent: Equatable {
             cards.append(Card(content: content, id: "\(pairIndex+1)a"))
             cards.append(Card(content: content, id: "\(pairIndex+2)b"))
         }
+        cards.shuffle()
     }
     
     var indexOfSingleFaceUpCard: Int? {
@@ -58,7 +59,7 @@ struct MemoryGame<CardContent>  where CardContent: Equatable {
     
     struct Card: Equatable, Identifiable, CustomStringConvertible {
 
-        var isFaceUp = false
+        var isFaceUp = true
         var isMatched = false
         var isSeen = false
         let content: CardContent
