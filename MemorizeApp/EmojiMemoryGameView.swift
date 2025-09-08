@@ -12,6 +12,7 @@ struct EmojiMemoryGameView: View {
     @ObservedObject var gameViewModel: EmojiMemoryGame
     
     private let aspectRatio: CGFloat = 2/3
+    private let spacing: CGFloat = 4
     
     
     var body: some View {
@@ -41,7 +42,7 @@ struct EmojiMemoryGameView: View {
     private var cards: some View {
         AspectVGrid(items: gameViewModel.cards, aspectRatio: aspectRatio) { card in
             CardView(card)
-                .padding(4)
+                .padding(spacing)
                 .onTapGesture {
                     gameViewModel.choose(card)
                 }

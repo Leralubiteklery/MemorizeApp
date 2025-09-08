@@ -15,15 +15,26 @@ struct CardView: View {
         self.card = card
     }
     
+    private struct Constants {
+        static let cornerRadius: CGFloat = 12
+        static let linewidth: CGFloat = 2
+        static let inset: CGFloat = 5
+        struct FontSize {
+            static let largest: CGFloat = 200
+            static let  smallest: CGFloat = 10
+            static let  scaleFactor = smallest / largest
+        }
+    }
+    
     var body: some View {
         ZStack {
-            let base = RoundedRectangle(cornerRadius: 12)
+            let base = RoundedRectangle(cornerRadius: Constants.cornerRadius)
             Group {
                 base.fill(.white)
-                base.strokeBorder(lineWidth: 2)
+                base.strokeBorder(lineWidth: Constants.linewidth)
                 Text(card.content)
-                    .font(.system(size: 200))
-                    .minimumScaleFactor(0.01)
+                    .font(.system(size: Constants.FontSize.largest))
+                    .minimumScaleFactor(Constants.FontSize.scaleFactor)
                     .aspectRatio(1, contentMode: .fit)
             }
             .opacity(card.isFaceUp ? 1 : 0)
@@ -35,7 +46,16 @@ struct CardView: View {
 }
 
 #Preview {
-        CardView(Card(content: "X", id: "test1"))
+    VStack {
+        HStack {
+            CardView(Card(isFaceUp: true, content: "X", id: "test1"))
+            CardView(Card(content: "X", id: "test1"))
+        }
+        HStack {
+            CardView(Card(isFaceUp: true, isMatched: true, content: "X", id: "test1"))
+            CardView(Card(isMatched: true, content: "X", id: "test1"))
+        }
+    }
         .padding()
         .foregroundStyle(.gray)
 }
