@@ -21,7 +21,7 @@ struct CardView: View {
             Group {
                 base.fill(.white)
                 base.strokeBorder(lineWidth: Constants.linewidth)
-                Circle()
+                Pie(endAngle: .degrees(240))
                     .opacity(Constants.Pie.opacity)
                     .overlay(
                 Text(card.content)
@@ -49,7 +49,7 @@ struct CardView: View {
             static let  scaleFactor = smallest / largest
         }
         struct Pie {
-            static let opacity: CGFloat = 0.4
+            static let opacity: CGFloat = 0.3
             static let inset: CGFloat = 5
         }
     }
