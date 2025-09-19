@@ -21,7 +21,6 @@ struct EmojiMemoryGameView: View {
                 .font(.largeTitle)
             Text("Score: \(gameViewModel.score)")
             cards
-                .animation(.default, value: gameViewModel.cards)
         }
         HStack {
             GameButton(
@@ -32,7 +31,7 @@ struct EmojiMemoryGameView: View {
             Spacer()
             GameButton(
                 title: "Shuffle",
-                action: { gameViewModel.shuffle() },
+                action: { withAnimation {gameViewModel.shuffle()}},
                 backgroundColor: gameViewModel.setThemeColor()
             )
         }
@@ -44,7 +43,9 @@ struct EmojiMemoryGameView: View {
             CardView(card)
                 .padding(spacing)
                 .onTapGesture {
-                    gameViewModel.choose(card)
+                    withAnimation(.easeInOut(duration: 3)) {
+                        gameViewModel.choose(card)
+                    }
                 }
         }
         .foregroundStyle(gameViewModel.setThemeColor())
