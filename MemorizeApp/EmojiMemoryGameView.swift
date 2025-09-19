@@ -36,6 +36,7 @@ struct EmojiMemoryGameView: View {
     
     private var score: some View {
         Text("Score: \(gameViewModel.score)")
+            .animation(nil)
     }
     
     private var newGameButton: some View {
