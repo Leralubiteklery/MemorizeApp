@@ -17,27 +17,43 @@ struct EmojiMemoryGameView: View {
     
     var body: some View {
         VStack {
-            Text("\(gameViewModel.currentTheme.name)")
-                .font(.largeTitle)
-            Text("Score: \(gameViewModel.score)")
+            theme
+            score
             cards
         }
         HStack {
-            GameButton(
-                title: "New Game",
-                action: { gameViewModel.startNewGame() },
-                backgroundColor: gameViewModel.setThemeColor()
-            )
+            newGameButton
             Spacer()
-            GameButton(
-                title: "Shuffle",
-                action: { withAnimation {gameViewModel.shuffle()}},
-                backgroundColor: gameViewModel.setThemeColor()
-            )
+            shuffleButton
         }
         .padding()
     }
     
+    private var theme: some View {
+        Text("\(gameViewModel.currentTheme.name)")
+            .font(.largeTitle)
+    }
+    
+    private var score: some View {
+        Text("Score: \(gameViewModel.score)")
+    }
+    
+    private var newGameButton: some View {
+        GameButton(
+            title: "New Game",
+            action: { gameViewModel.startNewGame() },
+            backgroundColor: gameViewModel.setThemeColor()
+        )
+    }
+    
+    private var shuffleButton: some View {
+        GameButton(
+            title: "Shuffle",
+            action: { withAnimation {gameViewModel.shuffle()}},
+            backgroundColor: gameViewModel.setThemeColor()
+        )
+    }
+
     private var cards: some View {
         AspectVGrid(items: gameViewModel.cards, aspectRatio: aspectRatio) { card in
             CardView(card)
